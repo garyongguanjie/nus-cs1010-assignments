@@ -5,7 +5,7 @@ int main(){
     int n,i,j,totalpairs,diffpairs;
     scanf("%d",&n);
 
-    int *arr = malloc(sizeof(int)*(n));
+    int *arr = (int *) malloc(sizeof(int)*(n));
     for(i=0;i<n;i++){
         scanf("%d",&arr[i]);
     }
