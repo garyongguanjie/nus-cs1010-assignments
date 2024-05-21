@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define abs(x)  ( ( (x) < 0) ? -(x) : (x) )
-
 int main(){
     int n,i,l,r,ninversions,p,maxV;
     int *arr;
