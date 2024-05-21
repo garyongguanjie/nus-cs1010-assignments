@@ -23,7 +23,7 @@ int main(){
             }
             
         }else{
-            c = 0;
+            c = 1;
         }
         prevd = d;
         n/=10;
