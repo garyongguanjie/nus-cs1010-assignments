@@ -1,34 +1,56 @@
 #include <stdio.h>
 #include <stdlib.h>
-// professor might be wrong in time complexity analysis
-int main(){
-    int j,i,n;
-    int *sieveCount;
-    int npairs;
-    scanf("%d",&n);
-    sieveCount = calloc(n,sizeof(int));
-    // O(nloglogn)
-    for(i=2;i<n;i++){
-        if(sieveCount[i]==0){
-            for(j=2*i;j<n;j+=i){
-                sieveCount[j]++;
-            }
-            if(i*i<n){
-                sieveCount[i*i]++;
-            }
+#include <stdbool.h>
+#include <math.h>
+
+#define PRIME 1
+#define SEMIPRIME 2
+#define NEITHER 3
+
+bool isPrime(int n){
+    if(n<2){
+        return false;
+    }
+    int i;
+    for(i=2;i<=sqrt(n);i++){
+        if (n%i==0){
+            return false;
         }
     }
-    npairs = 0;
-    int complement;
-    // O(n)
-    for(i=2;i<n;i++){
-        if(sieveCount[i]==0){
-            complement = n-i;
-            if(complement<n && sieveCount[complement]==2){
-                npairs++;
+    return true;
+}
+
+int isPrimeSemiPrimeNeither(int n){
+    int i;
+    bool a,b;
+    for(i=2;i<=sqrt(n);i++){
+        if(n%i==0){
+            a = isPrime(i);
+            b = isPrime(n/i);
+            if(a&&b){
+                // printf("%d %d\n",i,n/i);
+                return SEMIPRIME;
             }
-        }   
+            return NEITHER;
+        }
     }
-    free(sieveCount);
+    return PRIME;
+}
+
+int main(){
+    int i,n,complement,a,b;
+    scanf("%d",&n);
+    int npairs;
+    npairs =0;
+    for(i=2;i<=n/2;i++){
+        complement = n-i;
+        a = isPrimeSemiPrimeNeither(i);
+        b = isPrimeSemiPrimeNeither(complement);
+        if((a==PRIME && b==SEMIPRIME) || (a==SEMIPRIME && b==PRIME)){
+            // printf("%d %d\n",i,complement);
+            npairs++;
+        }
+    }
+    
     printf("%d\n",npairs);
 }
